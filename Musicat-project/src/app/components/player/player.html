@@ -1,0 +1,23 @@
+<div class="player">
+  <h2>Now Playing</h2>
+
+  @if (currentSong; as song) {
+    <p>
+      {{ song.title }}
+    </p>
+  }
+
+  <audio #audioPlayer controls></audio>
+
+  <h3>Library</h3>
+
+  <ul>
+    @for (song of songs; track song.id) {
+      <li>
+        <button (click)="play(song)">
+          ▶ {{ song.title }} 
+        </button>
+      </li>
+    }
+  </ul>
+</div>

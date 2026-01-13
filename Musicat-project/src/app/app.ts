@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { AudioPlayerComponent } from './audio-player.component';
+import { PlayerComponent } from './components/player/player';
 // 1. IMPORT THE PLAYER
 
 
@@ -8,7 +8,7 @@ import { AudioPlayerComponent } from './audio-player.component';
   selector: 'app-root',
   standalone: true,
   // 2. ADD IT TO THIS LIST SO THE HTML CAN USE IT
-  imports: [RouterOutlet, AudioPlayerComponent],
+  imports: [RouterOutlet, PlayerComponent],
   templateUrl: './app.html',
   styleUrl: './app.css' // Note: verify if your file is app.css or app.scss
 
