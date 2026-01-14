@@ -1,34 +1,55 @@
-<div class="player">
-  <h2>Now Playing</h2>
+<div class="player-container">
+  
+  <div class="now-playing-card">
+    <h2>Now Playing</h2>
+    
+    <div class="current-track-title">
+      @if (currentSong) {
+        {{ currentSong.title }}
+      } @else {
+        Select a track...
+      }
+    </div>
 
+    <audio #audioPlayer controls></audio>
+  </div>
 
-  <label>
-  Sort by:
-  <select (change)="sortMode = $any($event.target).value">
-    <option value="rating">Rating</option>
-    <option value="title">Title</option>
-    <option value="artist">Artist</option>
-  </select>
-</label>
+  <div class="search-container">
+    <input 
+      type="text" 
+      placeholder="Search by title or artist..." 
+      (input)="onSearch($event)"
+      class="search-input"
+    />
+  </div>
 
+  <div class="library-controls">
+    <h3>Library</h3>
+    <label>
+      Sort by:
+      <select class="sort-select" (change)="sortMode = $any($event.target).value">
+        <option value="rating">Rating</option>
+        <option value="title">Title</option>
+        <option value="artist">Artist</option>
+      </select>
+    </label>
+  </div>
 
-  @if (currentSong; as song) {
-    <p>
-      {{ song.title }}
-    </p>
-  }
-
-  <audio #audioPlayer controls></audio>
-
-  <h3>Library</h3>
-
-  <ul>
+  <ul class="song-list">
     @for (song of SortedSongs; track song.id) {
-      <li>
-        <button (click)="play(song)">
-          ▶ {{ song.title }} 
+      <li class="song-card" 
+          [class.active]="currentSong === song" 
+          (click)="play(song)">
+        
+        <div class="song-info">
+          <span class="song-title">{{ song.title }}</span>
+          </div>
+
+        <button class="play-btn-small">
+          ▶
         </button>
       </li>
     }
   </ul>
+
 </div>

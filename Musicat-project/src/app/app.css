@@ -1,0 +1,58 @@
+:host {
+  display: block;
+  background-color: #2D2933;
+  min-height: 100vh;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #ffffff;
+}
+
+h1 {
+  margin: 0;
+  color: #6425B8;
+  font-size: 1.8rem;
+  letter-spacing: 1px;
+}
+
+div[style*="text-align: center"] {
+  margin-top: 0 !important;
+  padding: 20px;
+  background-color: #2D2933;
+  border-bottom: 1px solid #583585;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.user-page {
+  width: 100%;
+}
+
+.user-page > a {
+  position: absolute;
+  top: 25px;
+  right: 20px;
+  color: #ffffff;
+  text-decoration: none;
+  background-color: #3F3152;
+  padding: 8px 16px;
+  border-radius: 8px;
+  border: 1px solid #583585;
+  font-size: 0.9rem;
+  transition: all 0.2s ease;
+  z-index: 1000;
+}
+
+.user-page > a:hover {
+  background-color: #6600EB;
+  border-color: #6600EB;
+  transform: translateY(-2px);
+}
+
+.user-page > div {
+  padding-top: 20px;
+}
+
+router-outlet + * {
+  display: block;
+}

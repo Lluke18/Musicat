@@ -14,6 +14,7 @@ import { CommonModule } from '@angular/common';
 export class PlayerComponent implements OnInit {
   songs: Song[] = [];
   currentSong?: Song;
+  searchTerm: string = '';
   //for sorting:
 
   sortMode: SortMode = 'rating';
@@ -43,25 +44,24 @@ export class PlayerComponent implements OnInit {
     this.audioRef.nativeElement.pause();
   }
 
-  get SortedSongs(): Song[] {
-    const songsCopy = [...this.songs];
+  onSearch(event: Event) { /* this here is something from google. should be verified */
+    this.searchTerm = (event.target as HTMLInputElement).value.toLowerCase();
+  }
+
+  get SortedSongs(): Song[] { /* i would further verify this logic. most likely it isn't updating frequently enough */
+    let filteredSongs = this.songs.filter(song => 
+      song.title.toLowerCase().includes(this.searchTerm) || 
+      song.artist.toLowerCase().includes(this.searchTerm)
+    );
 
     switch (this.sortMode) {
       case 'title':
-        return songsCopy.sort((a, b) =>
-          a.title.localeCompare(b.title)
-        );
-
+        return filteredSongs.sort((a, b) => a.title.localeCompare(b.title));
       case 'artist':
-        return songsCopy.sort((a, b) =>
-          a.artist.localeCompare(b.artist)
-        );
-
+        return filteredSongs.sort((a, b) => a.artist.localeCompare(b.artist));
       case 'rating':
       default:
-        return songsCopy.sort(
-          (a, b) => (b.rating ?? 0) - (a.rating ?? 0)
-        );
+        return filteredSongs.sort((a, b) => (b.rating ?? 0) - (a.rating ?? 0));
     }
   }
 }

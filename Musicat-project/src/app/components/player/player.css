@@ -1,0 +1,152 @@
+:host {
+  display: block;
+  background-color: #2D2933; 
+  color: #ffffff; 
+  min-height: 100vh;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  padding: 20px;
+}
+
+.player-container {
+  max-width: 600px;
+  margin: 0 auto; 
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.now-playing-card {
+  position: sticky; 
+  top: 10px; 
+  background: linear-gradient(135deg, #6425B8, #583585);
+  padding: 25px;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5); 
+  z-index: 100; 
+  text-align: center;
+  border: 1px solid rgba(255,255,255,0.1);
+}
+
+.now-playing-card h2 {
+  margin: 0 0 10px 0;
+  font-size: 0.8rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  opacity: 0.7;
+}
+
+.current-track-title {
+  font-size: 1.4rem;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+audio {
+  width: 100%;
+  height: 40px;
+  border-radius: 20px;
+  outline: none;
+}
+
+.library-controls {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 10px;
+  border-bottom: 1px solid #583585;
+}
+
+.sort-select {
+  background-color: #3F3152;
+  color: #ffffff;
+  border: 1px solid #583585;
+  padding: 10px 10px;
+  border-radius: 6px;
+  outline: none;
+}
+
+.song-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.song-card {
+  background-color: #3F3152; 
+  border: 1px solid #583585; 
+  padding: 15px 20px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: all 0.2s ease; 
+  cursor: pointer;
+}
+
+.song-card:hover {
+  background-color: #583585;
+  transform: translateX(5px);
+}
+
+.song-card.active {
+  border-left: 6px solid #6600EB;
+  background-color: #483C5C;
+}
+
+.song-title {
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.play-btn-small {
+  background-color: #6600EB;
+  color: #ffffff;
+  border: none;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s;
+}
+
+.play-btn-small:hover {
+  transform: scale(1.1);
+}
+
+.search-container {
+  width: 100%;
+  margin-top: 10px;
+}
+
+.search-input {
+  width: 100%;
+  background-color: #3F3152; /* Card interior color */
+  border: 1px solid #583585; /* Card edge color */
+  padding: 12px 15px;
+  border-radius: 10px;
+  color: #ffffff;
+  font-size: 1rem;
+  box-sizing: border-box;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.search-input:focus {
+  border-color: #6600EB; /* Accent color on focus */
+}
+
+.search-input::placeholder {
+  color: #8a7b9e; /* Dimmer text for placeholder */
+}
+
+.no-results {
+  text-align: center;
+  padding: 40px;
+  color: #8a7b9e;
+  font-style: italic;
+}
