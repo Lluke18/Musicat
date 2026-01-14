@@ -6,6 +6,7 @@ export interface Song {
   title: string;
   artist: string;
   file_path: string;
+  rating?: number;
 }
 
 @Injectable({ providedIn: 'root' })
@@ -15,7 +16,7 @@ export class SongService {
   async getSongs(): Promise<Song[]> {
     const { data, error } = await this.supabase.supabase
       .from('songs')
-      .select('*').eq('id', 1)
+      .select('*')
       .order('rating', { ascending: false, nullsFirst: true });
 
        console.log('Songs from DB:', data, error);

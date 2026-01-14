@@ -1,0 +1,123 @@
+<div class="user-profile-container">
+  <!-- Logged In View -->
+  @if (isLoggedIn && currentUser) {
+    <div class="profile-card">
+      <div class="profile-header">
+        <h2>Welcome, {{ currentUser.name }}!</h2>
+        <p class="subtitle">@{{ currentUser.username }}</p>
+      </div>
+
+      <div class="profile-info">
+        <div class="info-item">
+          <span class="label">Email:</span>
+          <span class="value">{{ currentUser.email }}</span>
+        </div>
+        <div class="info-item">
+          <span class="label">Username:</span>
+          <span class="value">{{ currentUser.username }}</span>
+        </div>
+      </div>
+
+      <button class="btn btn-logout" (click)="logout()">Logout</button>
+    </div>
+  }
+
+  <!-- Login/Signup View -->
+ @if (!isLoggedIn) {
+    <div class="auth-container">
+    <div class="auth-card">
+      <h2>{{ isSignupMode ? 'Create Account' : 'Sign In' }}</h2>
+
+      <!-- Error Message -->
+      @if (error) {
+        <div class="error-message">{{ error }}</div>
+      }
+
+      <!-- Login Form -->
+      @if (!isSignupMode) {
+        <div class="form-group">
+          <input
+            [(ngModel)]="username"
+            type="text"
+            placeholder="Username"
+            class="input-field"
+            [disabled]="loading"
+          />
+          <input
+            [(ngModel)]="password"
+            type="password"
+            placeholder="Password"
+            class="input-field"
+            [disabled]="loading"
+          />
+          <button
+            (click)="login()"
+            class="btn btn-primary"
+            [disabled]="loading"
+          >
+            {{ loading ? 'Signing In...' : 'Sign In' }}
+          </button>
+        </div>
+      }
+
+      <!-- Signup Form -->
+      @if (isSignupMode) {
+        <div class="form-group">
+        <input
+          [(ngModel)]="name"
+          type="text"
+          placeholder="Full Name"
+          class="input-field"
+          [disabled]="loading"
+        />
+        <input
+          [(ngModel)]="email"
+          type="email"
+          placeholder="Email"
+          class="input-field"
+          [disabled]="loading"
+        />
+        <input
+          [(ngModel)]="username"
+          type="text"
+          placeholder="Username"
+          class="input-field"
+          [disabled]="loading"
+        />
+        <input
+          [(ngModel)]="password"
+          type="password"
+          placeholder="Password"
+          class="input-field"
+          [disabled]="loading"
+        />
+        <input
+          [(ngModel)]="confirmPassword"
+          type="password"
+          placeholder="Confirm Password"
+          class="input-field"
+          [disabled]="loading"
+        />
+        <button
+          (click)="signup()"
+          class="btn btn-primary"
+          [disabled]="loading"
+        >
+          {{ loading ? 'Creating Account...' : 'Create Account' }}
+        </button>
+        </div>
+      }
+
+      <!-- Toggle Mode -->
+      <div class="toggle-mode">
+        <p>
+          {{ isSignupMode ? 'Already have an account?' : "Don't have an account?" }}
+          <button class="btn-link" (click)="toggleMode()" [disabled]="loading">
+            {{ isSignupMode ? 'Sign In' : 'Sign Up' }}
+          </button>
+        </p>
+      </div>
+    </div>
+
+</div>
+ }

@@ -2,6 +2,8 @@ import { Component, OnInit, ViewChild, ElementRef, ChangeDetectorRef } from '@an
 import { SongService, Song } from '../../services/song.service';
 import { CommonModule } from '@angular/common';
 
+  type SortMode = 'rating' | 'title' | 'artist';
+
 @Component({
   selector: 'app-player',
   standalone: true,
@@ -12,6 +14,10 @@ import { CommonModule } from '@angular/common';
 export class PlayerComponent implements OnInit {
   songs: Song[] = [];
   currentSong?: Song;
+  //for sorting:
+
+  sortMode: SortMode = 'rating';
+  
 
   @ViewChild('audioPlayer') audioRef!: ElementRef<HTMLAudioElement>;
 
@@ -35,5 +41,27 @@ export class PlayerComponent implements OnInit {
 
   pause() {
     this.audioRef.nativeElement.pause();
+  }
+
+  get SortedSongs(): Song[] {
+    const songsCopy = [...this.songs];
+
+    switch (this.sortMode) {
+      case 'title':
+        return songsCopy.sort((a, b) =>
+          a.title.localeCompare(b.title)
+        );
+
+      case 'artist':
+        return songsCopy.sort((a, b) =>
+          a.artist.localeCompare(b.artist)
+        );
+
+      case 'rating':
+      default:
+        return songsCopy.sort(
+          (a, b) => (b.rating ?? 0) - (a.rating ?? 0)
+        );
+    }
   }
 }

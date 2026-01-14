@@ -1,6 +1,17 @@
 <div class="player">
   <h2>Now Playing</h2>
 
+
+  <label>
+  Sort by:
+  <select (change)="sortMode = $any($event.target).value">
+    <option value="rating">Rating</option>
+    <option value="title">Title</option>
+    <option value="artist">Artist</option>
+  </select>
+</label>
+
+
   @if (currentSong; as song) {
     <p>
       {{ song.title }}
@@ -12,7 +23,7 @@
   <h3>Library</h3>
 
   <ul>
-    @for (song of songs; track song.id) {
+    @for (song of SortedSongs; track song.id) {
       <li>
         <button (click)="play(song)">
           ▶ {{ song.title }} 
