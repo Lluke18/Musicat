@@ -10,7 +10,7 @@ import { AuthService, User } from '../../services/auth.service';
   templateUrl: './user-profile.html',
   styleUrl: './user-profile.css',
 })
-export class UserProfile implements OnInit {
+export class UserProfileComponent implements OnInit {
   isLoggedIn = false;
   currentUser: User | null = null;
   isSignupMode = false;
