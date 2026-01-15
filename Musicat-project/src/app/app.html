@@ -5,7 +5,11 @@
   
 </div>
 <div class="user-page">
-<a routerLink="/auth"> Log in/Sign up</a>
+  @if (currentUser) {
+    <a routerLink="/auth" class="user-link">{{ currentUser.username }}</a>
+  } @else {
+    <a routerLink="/auth">Log in/Sign up</a>
+  }
 <div>
   <router-outlet></router-outlet>
 </div>

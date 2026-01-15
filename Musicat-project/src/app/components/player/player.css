@@ -83,6 +83,15 @@ audio {
   justify-content: space-between;
   transition: all 0.2s ease; 
   cursor: pointer;
+  gap: 15px;
+}
+
+.cover {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 8px;
+  flex-shrink: 0;
 }
 
 .song-card:hover {
@@ -93,6 +102,11 @@ audio {
 .song-card.active {
   border-left: 6px solid #6600EB;
   background-color: #483C5C;
+}
+
+.song-info {
+  flex: 1;
+  min-width: 0;
 }
 
 .song-title {
