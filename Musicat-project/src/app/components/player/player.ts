@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild, ElementRef, ChangeDetectorRef } from '@an
 import { SongService, Song } from '../../services/song.service';
 import { CommonModule } from '@angular/common';
 
-  type SortMode = 'rating' | 'title' | 'artist';
+  type SortMode = 'rating' | 'title' | 'artist' | 'album';
 
 @Component({
   selector: 'app-player',
@@ -26,6 +26,9 @@ export class PlayerComponent implements OnInit {
 
   async ngOnInit() {
     this.songs = await this.songService.getSongs();
+    for (const song of this.songs) {
+      
+    }
     this.cdr.detectChanges();
   }
 
@@ -51,17 +54,29 @@ export class PlayerComponent implements OnInit {
   get SortedSongs(): Song[] { /* i would further verify this logic. most likely it isn't updating frequently enough */
     let filteredSongs = this.songs.filter(song => 
       song.title.toLowerCase().includes(this.searchTerm) || 
-      song.artist.toLowerCase().includes(this.searchTerm)
+      song.artist.toLowerCase().includes(this.searchTerm) ||
+      (song.album && song.album.toLowerCase().includes(this.searchTerm))
     );
-
+    
     switch (this.sortMode) {
       case 'title':
         return filteredSongs.sort((a, b) => a.title.localeCompare(b.title));
       case 'artist':
         return filteredSongs.sort((a, b) => a.artist.localeCompare(b.artist));
+      case 'album':
+        return filteredSongs.sort((a, b) => (a.album ?? '').localeCompare(b.album ?? ''));
       case 'rating':
       default:
         return filteredSongs.sort((a, b) => (b.rating ?? 0) - (a.rating ?? 0));
     }
+    
   }
+
+  async getCoverUrl(song: Song): Promise<string> {
+  if (!song.cover_path) {
+    return 'assets/default-cover.png';
+  }
+
+  return await this.songService.getCoverUrl(song.cover_path);
+}
 }
