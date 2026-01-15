@@ -48,10 +48,11 @@
           [class.active]="currentSong === song" 
           (click)="play(song)">
           <img
-    class="cover"
-    [src]="song.cover_url "
-    alt="Album cover"
-  />
+            class="cover"
+            [src]="song.cover_url || 'assets/default-cover.png'"
+            alt="Album cover"
+            (error)="$event.target.src = 'assets/default-cover.png'"
+          />
         
         <div class="song-info">
           <span class="song-title">{{ song.title }}</span>

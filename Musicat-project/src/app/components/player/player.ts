@@ -26,8 +26,18 @@ export class PlayerComponent implements OnInit {
 
   async ngOnInit() {
     this.songs = await this.songService.getSongs();
+    // Load cover URLs for all songs
     for (const song of this.songs) {
-      
+      if (song.cover_path) {
+        try {
+          song.cover_url = await this.songService.getCoverUrl(song.cover_path);
+        } catch (error) {
+          console.error(`Failed to load cover for song ${song.id}:`, error);
+          song.cover_url = 'assets/default-cover.png';
+        }
+      } else {
+        song.cover_url = 'assets/default-cover.png';
+      }
     }
     this.cdr.detectChanges();
   }
@@ -71,12 +81,4 @@ export class PlayerComponent implements OnInit {
     }
     
   }
-
-  async getCoverUrl(song: Song): Promise<string> {
-  if (!song.cover_path) {
-    return 'assets/default-cover.png';
-  }
-
-  return await this.songService.getCoverUrl(song.cover_path);
-}
 }

@@ -39,15 +39,22 @@ export class SongService {
 
        console.log('Songs from DB:', data, error);
     if (error) throw error;
-    return data.map((item: any) => ({
-      id: item.id,
-      title: item.title,
-      artist: item.artists.name,
-      album: item.albums ? item.albums.title : undefined,
-      cover_path: item.albums?.[0]?.cover_arts?.[0]?.path ?? null,
-      file_path: item.file_path,
-      rating: item.rating,
-    }));
+    return data.map((item: any) => {
+      // Handle albums - could be single object or array
+      const album = Array.isArray(item.albums) ? item.albums[0] : item.albums;
+      // Handle cover_arts - could be single object or array
+      const coverArt = Array.isArray(album?.cover_arts) ? album?.cover_arts[0] : album?.cover_arts;
+      
+      return {
+        id: item.id,
+        title: item.title,
+        artist: item.artists?.name || 'Unknown Artist',
+        album: album?.title,
+        cover_path: coverArt?.path ?? null,
+        file_path: item.file_path,
+        rating: item.rating,
+      };
+    });
   }
 
   async getStreamingUrl(filePath: string): Promise<string> {

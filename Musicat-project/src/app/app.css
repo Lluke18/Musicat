@@ -49,6 +49,11 @@ div[style*="text-align: center"] {
   transform: translateY(-2px);
 }
 
+.user-link {
+  font-weight: 600;
+  color: #ffffff !important;
+}
+
 .user-page > div {
   padding-top: 20px;
 }

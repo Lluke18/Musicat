@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { AuthService, User } from '../../services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-user-profile',
@@ -25,7 +26,7 @@ export class UserProfileComponent implements OnInit {
   error: string | null = null;
   loading = false;
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService, private router: Router) {}
 
   ngOnInit() {
     this.currentUser = this.authService.getUserFromLocalStorage();
@@ -61,6 +62,8 @@ export class UserProfileComponent implements OnInit {
       this.authService.saveUserToLocalStorage(user);
       this.isLoggedIn = true;
       this.resetForm();
+      // Navigate back to main page after successful login
+      await this.router.navigate(['/']);
     } catch (err: any) {
       this.error = err.message || 'Login failed';
     } finally {
@@ -99,6 +102,8 @@ export class UserProfileComponent implements OnInit {
       this.isLoggedIn = true;
       this.resetForm();
       this.isSignupMode = false;
+      // Navigate back to main page after successful signup
+      await this.router.navigate(['/']);
     } catch (err: any) {
       this.error = err.message || 'Signup failed';
     } finally {
