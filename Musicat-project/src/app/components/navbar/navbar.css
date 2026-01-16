@@ -12,7 +12,17 @@
   margin: 0 auto;
   padding: 0 1rem;
 }
+.imag{
+  size: 69px;
+  height: 69px;
+  width: 69px;
+  float: left;
+  position: absolute;
+  left:0px;
+  padding-left: 20px;
 
+
+}
 .nav-button {
   background-color: transparent;
   border: 2px solid #EDB55E;
