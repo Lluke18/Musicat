@@ -26,19 +26,23 @@ export class PlayerComponent implements OnInit {
 
   async ngOnInit() {
     this.songs = await this.songService.getSongs();
-    // Load cover URLs for all songs
-    for (const song of this.songs) {
+    // Load cover URLs for all songs in parallel for better performance
+    const defaultCover = "https://ih1.redbubble.net/image.5250935734.0802/raf,360x360,075,t,fafafa:ca443f4786.jpg";
+    
+    const coverPromises = this.songs.map(async (song) => {
       if (song.cover_path) {
         try {
           song.cover_url = await this.songService.getCoverUrl(song.cover_path);
         } catch (error) {
           console.error(`Failed to load cover for song ${song.id}:`, error);
-          song.cover_url = "https://ih1.redbubble.net/image.5250935734.0802/raf,360x360,075,t,fafafa:ca443f4786.jpg";
+          song.cover_url = defaultCover;
         }
       } else {
-        song.cover_url = "https://ih1.redbubble.net/image.5250935734.0802/raf,360x360,075,t,fafafa:ca443f4786.jpg";
+        song.cover_url = defaultCover;
       }
-    }
+    });
+    
+    await Promise.all(coverPromises);
     this.cdr.detectChanges();
   }
 

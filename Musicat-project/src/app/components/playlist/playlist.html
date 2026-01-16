@@ -1,1 +1,103 @@
-<p>playlist works!</p>
+<div class="playlist-container">
+  <div class="playlist-header">
+    <h2>My Playlists</h2>
+    @if (currentUser) {
+      <button 
+        class="create-btn" 
+        (click)="startCreating()"
+        [disabled]="isCreating || isLoading">
+        + Create Playlist
+      </button>
+    }
+  </div>
+
+  @if (!currentUser) {
+    <div class="login-prompt">
+      <p>Please <a routerLink="/auth">log in</a> to view and create playlists.</p>
+    </div>
+  } @else {
+    @if (errorMessage) {
+      <div class="error-message">
+        {{ errorMessage }}
+      </div>
+    }
+
+    @if (isCreating) {
+      <div class="create-form">
+        <h3>Create New Playlist</h3>
+        <div class="form-group">
+          <label for="playlist-name">Playlist Name *</label>
+          <input 
+            id="playlist-name"
+            type="text" 
+            [(ngModel)]="newPlaylistName"
+            placeholder="Enter playlist name"
+            class="form-input"
+            [disabled]="isLoading"
+          />
+        </div>
+        <div class="form-group">
+          <label for="playlist-description">Description (optional)</label>
+          <textarea 
+            id="playlist-description"
+            [(ngModel)]="newPlaylistDescription"
+            placeholder="Enter playlist description"
+            class="form-textarea"
+            rows="3"
+            [disabled]="isLoading"
+          ></textarea>
+        </div>
+        <div class="form-actions">
+          <button 
+            class="btn-primary" 
+            (click)="createPlaylist()"
+            [disabled]="isLoading || !newPlaylistName.trim()">
+            @if (isLoading) {
+              Creating...
+            } @else {
+              Create
+            }
+          </button>
+          <button 
+            class="btn-secondary" 
+            (click)="cancelCreating()"
+            [disabled]="isLoading">
+            Cancel
+          </button>
+        </div>
+      </div>
+    }
+
+    @if (isLoading && !isCreating) {
+      <div class="loading">Loading playlists...</div>
+    } @else if (playlists.length === 0) {
+      <div class="empty-state">
+        <p>You don't have any playlists yet.</p>
+        <p>Click "Create Playlist" to get started!</p>
+      </div>
+    } @else {
+      <div class="playlist-grid">
+        @for (playlist of playlists; track playlist.id) {
+          <div class="playlist-card">
+            <div class="playlist-card-header">
+              <h3 class="playlist-name">{{ playlist.name }}</h3>
+              <button 
+                class="delete-btn"
+                (click)="deletePlaylist(playlist.id)"
+                [disabled]="isLoading"
+                title="Delete playlist">
+                
+              </button>
+            </div>
+            @if (playlist.description) {
+              <p class="playlist-description">{{ playlist.description }}</p>
+            }
+            <div class="playlist-meta">
+              <small>Created: {{ playlist.created_at ? (playlist.created_at | date:'short') : 'Unknown' }}</small>
+            </div>
+          </div>
+        }
+      </div>
+    }
+  }
+</div>
