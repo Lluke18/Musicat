@@ -31,6 +31,9 @@ export class SongService {
 
   private loadCacheFromStorage(): void {
     try {
+      if (typeof localStorage === 'undefined') {
+        return;
+      }
       const stored = localStorage.getItem(this.CACHE_STORAGE_KEY);
       if (stored) {
         const parsed = JSON.parse(stored);
@@ -50,6 +53,9 @@ export class SongService {
 
   private saveCacheToStorage(): void {
     try {
+      if (typeof localStorage === 'undefined') {
+        return;
+      }
       const cacheObj: Record<string, CachedUrl> = {};
       this.coverUrlCache.forEach((value, key) => {
         cacheObj[key] = value;
@@ -147,7 +153,9 @@ export class SongService {
   clearCoverCache(): void {
     this.coverUrlCache.clear();
     try {
-      localStorage.removeItem(this.CACHE_STORAGE_KEY);
+      if (typeof localStorage !== 'undefined') {
+        localStorage.removeItem(this.CACHE_STORAGE_KEY);
+      }
     } catch (error) {
       console.warn('Failed to clear cover URL cache from storage:', error);
     }
