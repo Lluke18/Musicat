@@ -13,9 +13,52 @@ export interface Song {
 
 }
 
+interface CachedUrl {
+  url: string;
+  expiresAt: number;
+}
+
 @Injectable({ providedIn: 'root' })
 export class SongService {
-  constructor(private supabase: Supabase) {}
+  private coverUrlCache = new Map<string, CachedUrl>();
+  private readonly CACHE_EXPIRY_BUFFER = 5 * 60 * 1000; // 5 minutes before expiry to refresh
+  private readonly CACHE_STORAGE_KEY = 'musicat_cover_urls';
+  private readonly COVER_URL_EXPIRY_HOURS = 24; // 24 hours expiry for cover images
+
+  constructor(private supabase: Supabase) {
+    this.loadCacheFromStorage();
+  }
+
+  private loadCacheFromStorage(): void {
+    try {
+      const stored = localStorage.getItem(this.CACHE_STORAGE_KEY);
+      if (stored) {
+        const parsed = JSON.parse(stored);
+        const now = Date.now();
+        // Only load non-expired entries
+        for (const [path, cached] of Object.entries(parsed)) {
+          const cacheEntry = cached as CachedUrl;
+          if (cacheEntry.expiresAt > now) {
+            this.coverUrlCache.set(path, cacheEntry);
+          }
+        }
+      }
+    } catch (error) {
+      console.warn('Failed to load cover URL cache from storage:', error);
+    }
+  }
+
+  private saveCacheToStorage(): void {
+    try {
+      const cacheObj: Record<string, CachedUrl> = {};
+      this.coverUrlCache.forEach((value, key) => {
+        cacheObj[key] = value;
+      });
+      localStorage.setItem(this.CACHE_STORAGE_KEY, JSON.stringify(cacheObj));
+    } catch (error) {
+      console.warn('Failed to save cover URL cache to storage:', error);
+    }
+  }
 
   async getSongs(): Promise<Song[]> {
     const { data, error } = await this.supabase.supabase
@@ -66,12 +109,47 @@ export class SongService {
     return data.signedUrl;
   }
 
-  async getCoverUrl(path: string): Promise<string> {// this is the last thing done
-  const { data, error } = await this.supabase.supabase.storage
-    .from('Organizarea')
-    .createSignedUrl(path, 60 * 60);
+  async getCoverUrl(path: string): Promise<string> {
+    if (!path) {
+      throw new Error('Cover path is required');
+    }
 
-  if (error) throw error;
-  return data.signedUrl;
-}
+    // Check cache first
+    const cached = this.coverUrlCache.get(path);
+    const now = Date.now();
+    
+    // Return cached URL if it exists and hasn't expired (with buffer)
+    if (cached && cached.expiresAt > (now + this.CACHE_EXPIRY_BUFFER)) {
+      return cached.url;
+    }
+
+    // Generate new signed URL with longer expiry for covers
+    const { data, error } = await this.supabase.supabase.storage
+      .from('Organizarea')
+      .createSignedUrl(path, this.COVER_URL_EXPIRY_HOURS * 60 * 60);
+
+    if (error) throw error;
+    
+    // Cache the URL with expiry time
+    const expiresAt = now + (this.COVER_URL_EXPIRY_HOURS * 60 * 60 * 1000);
+    this.coverUrlCache.set(path, {
+      url: data.signedUrl,
+      expiresAt: expiresAt
+    });
+    
+    // Persist to localStorage
+    this.saveCacheToStorage();
+    
+    return data.signedUrl;
+  }
+
+  // Clear cache if needed (e.g., on logout)
+  clearCoverCache(): void {
+    this.coverUrlCache.clear();
+    try {
+      localStorage.removeItem(this.CACHE_STORAGE_KEY);
+    } catch (error) {
+      console.warn('Failed to clear cover URL cache from storage:', error);
+    }
+  }
 }

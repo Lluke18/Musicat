@@ -1,1 +1,13 @@
-<p>navbar works!</p>
+<nav class="navbar">
+  <div class="nav-container">
+    <button routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="nav-button">
+      Home
+    </button>
+    <button routerLink="/friendships" routerLinkActive="active" class="nav-button">
+      Friendships
+    </button>
+    <button routerLink="/playlists" routerLinkActive="active" class="nav-button">
+      Playlists
+    </button>
+  </div>
+</nav>

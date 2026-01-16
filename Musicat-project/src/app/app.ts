@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { RouterOutlet, RouterLink, RouterLinkWithHref, Router, NavigationEnd } from '@angular/router';
 import { PlayerComponent } from './components/player/player';
 import { UserProfileComponent } from "./components/user-profile/user-profile";
+import { Navbar } from './components/navbar/navbar';
 import { AuthService, User } from './services/auth.service';
 import { CommonModule } from '@angular/common';
 import { filter, Subscription } from 'rxjs';
@@ -12,7 +13,7 @@ import { filter, Subscription } from 'rxjs';
   selector: 'app-root',
   standalone: true,
   // 2. ADD IT TO THIS LIST SO THE HTML CAN USE IT
-  imports: [RouterOutlet,  RouterLink, RouterLinkWithHref, CommonModule], //ALSO ADD HERE COMPONENTS
+  imports: [RouterOutlet,  RouterLink, RouterLinkWithHref, CommonModule, Navbar], //ALSO ADD HERE COMPONENTS
   templateUrl: './app.html',
   styleUrl: './app.css' // Note: verify if your file is app.css or app.scss
 

@@ -1,0 +1,293 @@
+.playlist-container {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+}
+
+.playlist-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.playlist-header h2 {
+  color: #ecf0f1;
+  margin: 0;
+}
+
+.create-btn {
+  background-color: #EDB55E;
+  color: #2c3e50;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.create-btn:hover:not(:disabled) {
+  background-color: #e5b05a;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(237, 181, 94, 0.3);
+}
+
+.create-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.login-prompt {
+  text-align: center;
+  padding: 3rem;
+  background-color: rgba(44, 62, 80, 0.5);
+  border-radius: 8px;
+  color: #ecf0f1;
+}
+
+.login-prompt a {
+  color: #EDB55E;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.login-prompt a:hover {
+  text-decoration: underline;
+}
+
+.error-message {
+  background-color: #e74c3c;
+  color: white;
+  padding: 1rem;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.create-form {
+  background-color: rgba(44, 62, 80, 0.7);
+  padding: 2rem;
+  border-radius: 8px;
+  margin-bottom: 2rem;
+  border: 1px solid #EDB55E;
+}
+
+.create-form h3 {
+  color: #EDB55E;
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-group label {
+  display: block;
+  color: #ecf0f1;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+
+.form-input,
+.form-textarea {
+  width: 100%;
+  padding: 0.75rem;
+  border: 2px solid #34495e;
+  border-radius: 4px;
+  background-color: #2c3e50;
+  color: #ecf0f1;
+  font-size: 1rem;
+  font-family: inherit;
+  box-sizing: border-box;
+}
+
+.form-input:focus,
+.form-textarea:focus {
+  outline: none;
+  border-color: #EDB55E;
+}
+
+.form-input:disabled,
+.form-textarea:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.form-textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+.form-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-end;
+}
+
+.btn-primary,
+.btn-secondary {
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-primary {
+  background-color: #EDB55E;
+  color: #2c3e50;
+}
+
+.btn-primary:hover:not(:disabled) {
+  background-color: #e5b05a;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(237, 181, 94, 0.3);
+}
+
+.btn-secondary {
+  background-color: transparent;
+  color: #ecf0f1;
+  border: 2px solid #34495e;
+}
+
+.btn-secondary:hover:not(:disabled) {
+  border-color: #EDB55E;
+  color: #EDB55E;
+}
+
+.btn-primary:disabled,
+.btn-secondary:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.loading {
+  text-align: center;
+  padding: 3rem;
+  color: #ecf0f1;
+  font-size: 1.1rem;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 4rem 2rem;
+  color: #95a5a6;
+}
+
+.empty-state p {
+  margin: 0.5rem 0;
+  font-size: 1.1rem;
+}
+
+.playlist-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.playlist-card {
+  background-color: rgba(44, 62, 80, 0.7);
+  border: 2px solid #34495e;
+  border-radius: 8px;
+  padding: 1.5rem;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.playlist-card:hover {
+  border-color: #EDB55E;
+  transform: translateY(-4px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+}
+
+.playlist-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+}
+
+.playlist-name {
+  color: #EDB55E;
+  margin: 0;
+  font-size: 1.3rem;
+  flex: 1;
+  word-break: break-word;
+}
+
+.delete-btn {
+  background-color: transparent;
+  border: none;
+  color: #e74c3c;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 0;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+  margin-left: 0.5rem;
+}
+
+.delete-btn:hover:not(:disabled) {
+  background-color: rgba(231, 76, 60, 0.2);
+  transform: scale(1.1);
+}
+
+.delete-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.playlist-description {
+  color: #bdc3c7;
+  margin: 0.5rem 0;
+  line-height: 1.5;
+  word-break: break-word;
+}
+
+.playlist-meta {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid #34495e;
+}
+
+.playlist-meta small {
+  color: #7f8c8d;
+  font-size: 0.85rem;
+}
+
+@media (max-width: 768px) {
+  .playlist-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .create-btn {
+    width: 100%;
+  }
+
+  .playlist-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .form-actions {
+    flex-direction: column;
+  }
+
+  .btn-primary,
+  .btn-secondary {
+    width: 100%;
+  }
+}
