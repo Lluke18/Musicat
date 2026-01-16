@@ -63,15 +63,22 @@ export class AuthService {
   }
 
   saveUserToLocalStorage(user: User): void {
-    localStorage.setItem('currentUser', JSON.stringify(user));
+    if (typeof localStorage !== 'undefined') {
+      localStorage.setItem('currentUser', JSON.stringify(user));
+    }
   }
 
   getUserFromLocalStorage(): User | null {
+    if (typeof localStorage === 'undefined') {
+      return null;
+    }
     const user = localStorage.getItem('currentUser');
     return user ? JSON.parse(user) : null;
   }
 
   logout(): void {
-    localStorage.removeItem('currentUser');
+    if (typeof localStorage !== 'undefined') {
+      localStorage.removeItem('currentUser');
+    }
   }
 }
