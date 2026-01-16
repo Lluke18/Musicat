@@ -1,5 +1,5 @@
 import { Component, ElementRef, viewChild, signal } from '@angular/core';
-
+//needs to be deleted
 @Component({
   selector: 'audio-player',
   standalone: true,
