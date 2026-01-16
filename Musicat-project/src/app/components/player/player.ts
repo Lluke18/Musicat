@@ -33,10 +33,10 @@ export class PlayerComponent implements OnInit {
           song.cover_url = await this.songService.getCoverUrl(song.cover_path);
         } catch (error) {
           console.error(`Failed to load cover for song ${song.id}:`, error);
-          song.cover_url = 'assets/default-cover.png';
+          song.cover_url = "https://ih1.redbubble.net/image.5250935734.0802/raf,360x360,075,t,fafafa:ca443f4786.jpg";
         }
       } else {
-        song.cover_url = 'assets/default-cover.png';
+        song.cover_url = "https://ih1.redbubble.net/image.5250935734.0802/raf,360x360,075,t,fafafa:ca443f4786.jpg";
       }
     }
     this.cdr.detectChanges();
